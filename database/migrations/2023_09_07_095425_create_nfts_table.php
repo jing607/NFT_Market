@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('nfts', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable(false);
-            $table->text('description')->nullable(true);
-            $table->text('contrat')->nullable(false)->unique();
+            $table->string('artist');
+            $table->text('description');
+            $table->text('contrat')->nullable(false);
             $table->enum('standard_token', ['ERC-721', 'ERC-1155', 'ERC-998']);
             $table->double('price');
             $table->string('image');
 
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')
             ->references('id')
             ->on('users');

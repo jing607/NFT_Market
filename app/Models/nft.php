@@ -4,8 +4,32 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class nft extends Model
+class Nft extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'artist',
+        'description',
+        'contrat',
+        'standard_token',
+        'price',
+        'image',
+    ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+
+
 }
