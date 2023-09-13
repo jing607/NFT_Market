@@ -67,7 +67,7 @@
     "standard": "ERC-721",
     "prix": 0.0249,
     "fichier": "images/nft-07.jpg",
-    "catégorie": "jeux vidéo online"
+    "catégorie": "jeux video online"
   },
   {
     "titre": "Yokai Kingdom Genesis #4345",
@@ -77,7 +77,7 @@
     "standard": "ERC-721",
     "prix": 0.1,
     "fichier": "images/nft-08.jpg",
-    "catégorie": "jeux vidéo online"
+    "catégorie": "jeux video online"
   },
   {
     "titre": "BoredApeYachtClub #6582",
@@ -127,7 +127,7 @@
     "standard": "ERC-1155",
     "prix": 3,
     "fichier": "images/nft-13.webp",
-    "catégorie": "jeux vidéo online"
+    "catégorie": "jeux video online"
   },
   {
     "titre": "#0217",

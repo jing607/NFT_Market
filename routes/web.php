@@ -6,6 +6,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\NftController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,57 +20,55 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/', function () {
-    return redirect('home');
-});
+// Route::get('/', function () {
+//     return redirect('home');
+// });
+
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/cat/{catID?}', [HomeController::class, 'index'])->name('home.cat');
 
 Auth::routes();
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
 // USER
-Route::get('/user/login', [UserController::class, 'login'])->name('user.login');
-Route::get('/user/register', [UserController::class, 'create'])->name('user.register');
-Route::get('/user/logout', [UserController::class, 'logout'])->name('user.logout');
-
-
-// liste des nfts
-Route::get('/nft', [NftController::class, 'index'])->name('nft.list');
-
-// liste des nfts filtrés par catégory
-Route::get('/nft/{category_id}/category', [NftController::class, 'show'])->name('nft.category');
-
 // détaille d'un nft
-Route::get('/nft/{id}', [NftController::class, 'show'])->name('nft.detail');
+Route::get('nft/{id}', [NftController::class, 'showNftDetails'])->name('nft.detail');
 
+// user authentifié uniquement
 // collection d'user
-Route::get('/nft/{id}/user', [UserController::class, 'show'])->name('user.mycollection');
+Route::get('/user/nft/collection', [UserController::class, 'showCollection'])->name('user.collection');
 
+// ajout d'un nft dans la collection du user
+Route::get('/user/nft/add/{id}', [UserController::class, 'addToCollection'])->name('user.collection.add');
 
+// suppression d'un nft dans la collection du user
+Route::get('/user/nft/remove/{id}', [UserController::class, 'removeFromCollection'])->name('user.collection.remove');
 
 
 // ADMIN
-Route::get('/admin/login', [AdminController::class, 'index'])->name('admin.login');
-Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+Route::get('/admin1234/login', [AdminLoginController::class, 'login'])->name('admin.login');
+Route::post('/admin/auth', [AdminLoginController::class, 'authenticate'])->name('admin.auth');
 
-// liste des users
-Route::get('/admin/user', [AdminController::class, 'show'])->name('user.list');
+Route::group(['middleware' => 'admin'], function () {
 
-// liste des nfts
-Route::get('/admin/nft', [AdminController::class, 'show'])->name('nft.list');
+    Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
-// affiche un formulaire de creation de nft
-Route::get('/admin/nft/new', [AdminController::class, 'create'])->name('admin.create');
+    // liste des users
+    Route::get('/admin/users', [AdminController::class, 'adminUserList'])->name('admin.user.list');
 
-// effectue le traitement de creation d'un nft en base de donnée
-Route::post('/admin/nft', [AdminController::class, 'store'])->name('admin.store');
+    // liste des nfts
+    Route::get('/admin/nft', [AdminController::class, 'showNftList'])->name('admin.nft.list');
 
-// affiche le formulaire en modification d'un nft
-Route::get('/admin/nft/edit', [AdminController::class, 'edit'])->name('admin.edit');
+    // affiche un formulaire de creation de nft
+    Route::get('/admin/nft/new', [AdminController::class, 'create'])->name('admin.nft.create');
 
-// effectue le traitement en modification d'un nft en bdd
-Route::post('/admin/nft}', [AdminController::class, 'update'])->name('admin.update');
+    // effectue le traitement de creation d'un nft en base de donnée
+    Route::post('/admin/nft/store', [AdminController::class, 'store'])->name('admin.nft.store');
 
-// effectue le traitement en suppression d'un nft en bdd
-Route::delete('/admin/nft', [AdminController::class, 'destroy'])->name('admin.destroy');
+    // effectue le traitement en suppression d'un nft en bdd
+    Route::get('/admin/nft/delete/{id}', [AdminController::class, 'destroy'])->name('admin.nft.destroy');
+});
+
+
+

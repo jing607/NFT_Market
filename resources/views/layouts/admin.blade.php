@@ -13,23 +13,21 @@
     {{-- <link rel="dns-prefetch" href="//fonts.bunny.net"> --}}
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,400;0,600;0,700;1,200;1,400&display=swap" rel="stylesheet">
 
-
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    {{-- <link rel="stylesheet" href="{{ asset('public/css/app.css') }}"> --}}
-
-
 </head>
+
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-
-                <a href="{{ url('/') }}"class="navbar-logo">
+                <a class="navbar-brand navbar-logo" href="{{ url('/admin/users') }}">
                     <img src="{{ asset('images/nft-market-logo.jpg') }}" alt="logo"/>
+                    {{-- {{ config('app.name', 'Laravel') }} --}}
                 </a>
-
-
+                {{-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button> --}}
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
@@ -47,26 +45,19 @@
                                     {{ Auth::user()->name }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end " aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-                                    @auth
-                                        @if (auth()->user()->role === 'ROLE_ADMIN')
-                                        <a class="dropdown-item " href="{{ route('admin.user.list') }}">
-                                            {{ __('Back Office') }}
-                                        </a>
-                                        @endif
-                                        <a class="dropdown-item" href="{{ route('user.collection') }}">
-                                            {{ __('My collection') }}
-                                        </a>
-                                    @endauth
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
+                                    <a class="dropdown-item" href="{{ route('home') }}">
+                                        {{ __('Front Office') }}
+                                    </a>
                                 </div>
                             </li>
                         @else

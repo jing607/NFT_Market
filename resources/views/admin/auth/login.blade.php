@@ -1,16 +1,16 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <body class="container">
-    <section class="row justify-content-center">
-        <div class="col-md-8">
+    <main class="row justify-content-center">
+        <section class="col-md-8">
             <div class="card">
                 <div class="login-card-header">
                     {{ __('Login') }}
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('admin.auth') }}">
                         @csrf
 
                         <div class="row mb-3">
@@ -69,7 +69,7 @@
                     </form>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 </body>
 @endsection

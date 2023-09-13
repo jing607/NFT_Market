@@ -64,10 +64,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $randomBalance = mt_rand(0, 100000);
+        $randomBalance /= 1000;
+        $formatted = number_format($randomBalance, 5);
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'wallet' => $formatted
         ]);
     }
 }
